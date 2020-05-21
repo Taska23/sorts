@@ -2,7 +2,7 @@ package sorts;
 
 public class HeapSort {
 
-    void heapify(int arr[],int n,int i) {
+    static void heapify(int arr[], int n, int i) {
         int largest = i;
         int left = 2*i + 1;
         int right = 2*i + 2;
@@ -22,7 +22,7 @@ public class HeapSort {
 
     }
 
-    void sort(int arr[]) {
+    public static void sort(int arr[]) {
         int n = arr.length;
         for(int i=n/2-1; i>=0; i--) {
             heapify(arr,n,i);
