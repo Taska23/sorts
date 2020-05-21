@@ -7,7 +7,8 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class Sorter {
-    public void sort(int input[]){
+    public long[] sort(int[] input){
+        long stats[] = new long[6];
         long start;
         long finish;
         long timeConsumedMillis;
@@ -22,6 +23,7 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("TimSort finished. Time: "+timeConsumedMillis + " ms");
+        stats[0] = timeConsumedMillis;
 
 
         // Вариант 4, вторая сортировка аналог "STL::stable-sort"
@@ -35,6 +37,7 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("StableSort finished. Time: "+timeConsumedMillis + " ms");
+        stats[1] = timeConsumedMillis;
 
 
         // Вариант 4, Третья сортировка BucketSort
@@ -47,6 +50,7 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("BucketSort finished. Time: "+timeConsumedMillis + " ms");
+        stats[2] = timeConsumedMillis;
 
 
         // Вариант 4, четвёртая сортировка QuickRadixSort
@@ -59,6 +63,8 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("QuickRadixSort finished. Time: "+timeConsumedMillis + " ms");
+        stats[3] = timeConsumedMillis;
+
 
         // Вариант 4, пятая сортировка IntroSort
         int [] example5 = input.clone();
@@ -70,6 +76,7 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("IntroSort finished. Time: "+timeConsumedMillis + " ms");
+        stats[4] = timeConsumedMillis;
 
 
         // Вариант 4, шестая сортировка аналог "STL::sort"
@@ -82,5 +89,9 @@ public class Sorter {
         finish = System.currentTimeMillis();
         timeConsumedMillis = finish - start;
         System.out.println("Sort finished. Time: "+timeConsumedMillis + " ms");
+        stats[5] = timeConsumedMillis;
+
+
+        return stats;// возврат массива элементов, где каждый элемент обозначает время, затраченное на сортировку
     }
 }

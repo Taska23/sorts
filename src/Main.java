@@ -1,41 +1,74 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Random;
+
 public class Main {
-    public static void main(String[] args) {
-
-
-        int a = 0; // Начальное значение диапазона - "от"
-        long b = 2147483647; // Конечное значение диапазона - "до" для 30тс
-        long c = 100000-1; // Конечное значение диапазона - "до" для 100тс
-        long d = (long)Math.pow(2,15); // Конечное значение диапазона - "до" для 300тс
-        long g = 2147483647; // Конечное значение диапазона - "до" для 1мл
-
-
-
-        int[] thiT  = new int[30_000];
-        for (int i = 0; i < thiT.length; i++) {
-            thiT[i] = a + (int) (Math.random() * b);
-        }
-        int[] tenTT  = new int[100_000];
-        for (int i = 0; i < tenTT.length; i++) {
-            tenTT[i] = a + (int) (Math.random() * c);
-        }
-        int[] thiTT  = new int[300_000];
-        for (int i = 0; i < thiTT.length; i++) {
-            thiTT[i] = a + (int) (Math.random() * d);
-        }
-        int[] oneM  = new int[1_000_000];
-        for (int i = 0; i < oneM.length; i++) {
-            oneM[i] = a + (int) (Math.random() * g);
-        }
-
+    public static void main(String[] args) throws IOException {
 
         Sorter sorter = new Sorter();
-        System.out.println("Starting sorts at 30k");
-        sorter.sort(thiT);
-        System.out.println("Starting sorts at 100k");
-        sorter.sort(tenTT);
-        System.out.println("Starting sorts at 300k");
-        sorter.sort(thiTT);
-        System.out.println("Starting sorts at 1kk");
-        sorter.sort(oneM);
+        Random random = new Random();
+        FileWriter fw = new FileWriter("stats.txt");
+        fw.write("First row contains info about pool size and generation method\n");
+        fw.write("Next row contains info about time(in ms) spent to sort array:\n");
+        fw.write("TimSort | STL::stable-sort | BucketSort | QuickRadixSort | IntroSort | STL::sort");
+
+        for (int i = 0; i < 4; i++) {
+
+            for (int j = 0; j < 4; j++) {
+
+                for (int l = 0; l < 5 ; l++){
+                    int size = 0;
+                    long upperBound = 0;
+                    switch (i){
+                        case 0: size = 30000;
+                        fw.write("Size: 30 000 ");
+                        break;
+                        case 1: size = 100000;
+                            fw.write("Size: 100 000 ");
+                            break;
+                        case 2: size = 300000;
+                            fw.write("Size: 300 000 ");
+                            break;
+                        case 3: size = 1000000;
+                            fw.write("Size: 1 000 000 ");
+                            break;
+                        default: System.err.println("err");
+                        break;
+                    }
+                    switch (j){
+                        case 0: upperBound = (long)Math.pow(2,31);
+                        fw.write("Bounds: 0 - 2^31 ");
+                        break;
+                        case 1: upperBound = size-1;
+                            fw.write("Bounds: 0 - " + size + " ");
+                            break;
+                        case 2: upperBound = (long)Math.pow(2,15);
+                            fw.write("Bounds: 0 - 2^15 ");
+                            break;
+                        case 3: upperBound = (long)Math.pow(2,31);
+                            fw.write("Bounds: 0 - 2^31 (Normal Distribution) ");
+                            break;
+                        default: System.err.println("err");
+                        break;
+                    }
+                    int[] arr = new int[size];
+                    for (int g = 0; g < arr.length; g++){
+                        if(j == 3){
+                            arr[g] = (int) (0 +  Math.random() * Math.pow(2,31) * (random.nextGaussian()));
+                        }else{
+                            arr[g] = 0 + (int) (Math.random() * upperBound);
+                        }
+
+                    }
+
+                    fw.write((sorter.sort(arr)).toString());
+                    fw.write("\n");
+                }
+                fw.write("\n");
+            }
+            fw.write("\n");
+        }
+        fw.write("end.");
+        fw.close();
     }
 }
