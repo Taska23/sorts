@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
@@ -54,14 +55,20 @@ public class Main {
                     int[] arr = new int[size];
                     for (int g = 0; g < arr.length; g++){
                         if(j == 3){
-                            arr[g] = (int) (0 +  Math.random() * Math.pow(2,31) * (random.nextGaussian()));
+                            int tmp = (int) (0 +  Math.random() * Math.pow(2,31) * (random.nextGaussian()));
+                            if (tmp > 0) {
+                                arr[g] = tmp;
+                            }else{
+                                arr[g] = tmp * -1;
+                            }
+
                         }else{
                             arr[g] = 0 + (int) (Math.random() * upperBound);
                         }
 
                     }
 
-                    fw.write((sorter.sort(arr)).toString());
+                    fw.write(Arrays.toString(sorter.sort(arr)));
                     fw.write("\n");
                 }
                 fw.write("\n");
@@ -69,6 +76,7 @@ public class Main {
             fw.write("\n");
         }
         fw.write("end.");
+        fw.flush();
         fw.close();
     }
 }
