@@ -7,6 +7,8 @@ public class BucketSort
     public static int[] sort(int[] sequence, int maxValue)
     {
         // Bucket Sort
+        System.out.println(maxValue + " < ------------------ MAX VALUE(vskiy tsirkular)");
+
         int[] Bucket = new int[maxValue + 1];
         int[] sorted_sequence = new int[sequence.length];
 

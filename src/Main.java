@@ -4,6 +4,14 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
+    public static double gaussAtBounds(){
+        Random random = new Random();
+        double a = 2;
+        while (a>= 1 || a<= -1) {
+            a = random.nextGaussian();
+        }
+        return a;
+    }
     public static void main(String[] args) throws IOException {
 
         Sorter sorter = new Sorter();
@@ -55,7 +63,7 @@ public class Main {
                     int[] arr = new int[size];
                     for (int g = 0; g < arr.length; g++){
                         if(j == 3){
-                            int tmp = (int) (0 +  Math.random() * Math.pow(2,31) * (random.nextGaussian()));
+                            int tmp = (int) gaussAtBounds();
                             if (tmp > 0) {
                                 arr[g] = tmp;
                             }else{
